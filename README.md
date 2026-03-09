@@ -1,1 +1,38 @@
 # GADI_File_expire_recover
+
+If system shows there are files on Gadi are about to expire soon or has already expired.  
+Here are some list of command useful:  
+```{sh}
+nci-file-expiry list-warnings --help
+nci-file-expiry list-quarantined --help
+nci-file-expiry recover --help
+nci-file-expiry status --help
+```
+
+If the system has shown this  
+" "  
+Follow this process:  
+```
+nci-file-expiry list-quarantined > list.quarantin
+```
+
+Then generate the recovery commands:  
+```
+awk '
+NR==1 {next}                  # skip header
+NF==0 {next}                  # skip blank lines
+{
+    id=$1
+    path=substr($0, index($0, "/"))
+    print "nci-file-expiry recover " id " \"" path "\""
+}
+' list.quarantin > recover_quarantined.sh
+# Make it executable
+chmod +x recover_quarantined.sh
+# Then run
+bash recover_quarantined.sh
+```
+Then, check for the file status  
+```
+nci-file-expiry status --help
+```
