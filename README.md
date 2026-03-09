@@ -1,6 +1,7 @@
 # GADI_File_expire_recover
 
 If system shows there are files on Gadi are about to expire soon or has already expired.  
+__"You have ** files about to expire under project ****"__  
 Here are some list of command useful:  
 ```{sh}
 nci-file-expiry list-warnings --help
@@ -10,7 +11,7 @@ nci-file-expiry status --help
 ```
 
 If the system has shown this  
-" "  
+__"You have ** files in quarantine under project ****"__  
 Follow this process:  
 ```
 nci-file-expiry list-quarantined > list.quarantin
