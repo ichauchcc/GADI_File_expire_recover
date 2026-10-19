@@ -14,7 +14,11 @@ If the system has shown this
 __"You have ** files in quarantine under project ****"__  
 Follow this process:  
 ```
-nci-file-expiry list-quarantined > list.quarantin
+mkdir -p /scratch/ut47/file_recovery
+nci-file-expiry list-quarantined > /scratch/ut47/file_recovery/list.quarantin
+
+# make sure it contians file names
+ls -lh /scratch/ut47/file_recovery/list.quarantin
 ```
 
 Then generate the recovery commands:  
@@ -27,8 +31,9 @@ NF==0 {next}                  # skip blank lines
     path=substr($0, index($0, "/"))
     print "nci-file-expiry recover " id " \"" path "\""
 }
-' list.quarantin > recover_quarantined.sh
+' /scratch/ut47/file_recovery/list.quarantin > /scratch/ut47/file_recovery/recover_quarantined.sh
 # Make it executable
+cd /scratch/ut47/file_recovery
 chmod +x recover_quarantined.sh
 # Then run
 bash recover_quarantined.sh
